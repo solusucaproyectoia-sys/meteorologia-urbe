@@ -1,0 +1,12 @@
+Logo institucional
+==================
+
+Archivo: web/assets/logo-urbe.png
+Origen: sitio oficial de la universidad, https://cdn.urbe.edu/portal-urbe/images/logos/urbe-hd.png
+Formato: PNG 512 x 512 px, fondo blanco.
+
+La aplicación lo muestra en un recuadro blanco de 108 px (86 px en móvil) con
+object-fit: contain, por lo que no se recorta.
+
+Si el profesor entrega una versión oficial distinta (por ejemplo, en alta resolución
+o con fondo transparente), reemplace este archivo conservando el mismo nombre.

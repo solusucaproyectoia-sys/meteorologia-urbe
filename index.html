@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel Meteorológico URBE</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="cabecera">
+    <div class="marca">
+      <img id="logo" class="logo" src="assets/logo-urbe.png" alt="Logo oficial de la Universidad Privada Dr. Rafael Belloso Chacín">
+      <div id="logo-respaldo" class="logo-respaldo" aria-hidden="true">URBE</div>
+    </div>
+    <div class="identidad">
+      <p class="institucion">Universidad Privada Dr. Rafael Belloso Chacín. Decanato de Extensión. Diplomado en Inteligencia Artificial</p>
+      <h1 id="titulo-app">Panel Meteorológico URBE</h1>
+      <p class="detalle">
+        <span id="nombre-estudiante">Nombre del estudiante</span>
+        <span class="separador">·</span>
+        Estación Meteorológica URBE, Maracaibo
+      </p>
+    </div>
+  </header>
+
+  <main class="contenido">
+
+    <section class="panel" aria-label="Selección de la fecha">
+      <div class="campo">
+        <label for="sel-anio">Año</label>
+        <select id="sel-anio"></select>
+      </div>
+      <div class="campo">
+        <label for="sel-mes">Mes</label>
+        <select id="sel-mes"></select>
+      </div>
+      <div class="campo">
+        <label for="sel-dia">Día</label>
+        <select id="sel-dia"></select>
+      </div>
+      <button id="btn-consultar" type="button">Consultar</button>
+      <p id="estado" class="estado estado-cargando" role="status" aria-live="polite">Iniciando…</p>
+    </section>
+
+    <section class="procedencia" aria-label="Origen de los datos">
+      <h2>Origen de los datos consultados</h2>
+      <div id="procedencia">
+        <p class="vacio">Aún no se ha consultado ningún archivo.</p>
+      </div>
+    </section>
+
+    <section class="rejilla-graficos">
+
+      <article class="tarjeta">
+        <h2>1. Histograma de velocidad del viento</h2>
+        <p class="subtitulo">Distribución de frecuencias de la velocidad instantánea del día seleccionado.</p>
+        <div class="lienzo"><canvas id="grafico-viento" aria-label="Histograma de velocidad del viento"></canvas></div>
+        <div id="ind-viento" class="indicadores"></div>
+      </article>
+
+      <article class="tarjeta">
+        <h2>2. Perfil horario de irradiancia solar</h2>
+        <p class="subtitulo">Promedio de los registros válidos de cada hora, en W/m².</p>
+        <div class="lienzo"><canvas id="grafico-radiacion" aria-label="Perfil horario de irradiancia solar"></canvas></div>
+        <div id="ind-radiacion" class="indicadores"></div>
+      </article>
+
+      <article class="tarjeta">
+        <h2>3. Perfil horario de temperatura del aire</h2>
+        <p class="subtitulo">Temperatura media de cada hora, en °C.</p>
+        <div class="lienzo"><canvas id="grafico-temperatura" aria-label="Perfil horario de temperatura del aire"></canvas></div>
+        <div id="ind-temperatura" class="indicadores"></div>
+      </article>
+
+    </section>
+
+    <section class="notas" aria-label="Notas metodológicas">
+      <h2>Notas metodológicas</h2>
+      <ul>
+        <li>Los archivos mensuales del repositorio son exportaciones de la estación en formato WeeWX. El campo <code>usUnits = 16</code> indica sistema métrico: temperatura en °C, viento en <strong>km/h</strong>, radiación en W/m² y lluvia en mm.</li>
+        <li>La velocidad del viento se convierte a m/s dividiendo entre 3,6 antes de graficar. La conversión se aplica en el navegador y el valor original no se modifica.</li>
+        <li>Las medias se calculan con todos los registros válidos (sin datos faltantes) y no con las medias horarias, para no dar doble peso a las horas con menos registros.</li>
+        <li>La cobertura compara los registros válidos con los esperados según el intervalo real del archivo (5 min ⇒ 12 por hora; 15 min ⇒ 4 por hora).</li>
+        <li>La irradiación diaria es un cálculo derivado (Σ irradiancia × intervalo) y se muestra en kWh/m²; no es una medición directa.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>Fuente: repositorio de la Estación Meteorológica URBE (Google Drive). Aplicación desarrollada con asistencia de inteligencia artificial para el Diplomado en Inteligencia Artificial, Decanato de Extensión, Universidad Privada Dr. Rafael Belloso Chacín.</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/metricas.js"></script>
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="js/proveedor.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
